@@ -10,26 +10,25 @@ OUTS		:= EUkitlib.a logclib.a
 ifeq ($(OS),Windows_NT)
 # PLATFORM = "Windows"
 RM			:= del /s /q /f 
-# RMDIR		:= rmdir /s /q
-SRCS		:= $(shell dir /b /s /a-d "$(SRC)\*.$(EX_NAME)")
+FIND_FILE	= $(shell dir /b /s /a-d "$(1)\*.$(2)")
 else
 #  PLATFORM = "Unix-Like"
 RM			:= rm -f
-# RMDIR		:= rm -rf
-SRCS		:= $(shell find $(SRC) -type f | grep ".$(EX_NAME)$$" --color=never)
+FIND_FILE	= $(shell find $(1) -type f | grep ".$(2)$$" --color=never)
 endif
 
-OBJS		:= $(patsubst %.$(EX_NAME), %.o,$(SRCS))
+GET_OBJS	= $(patsubst %.$(EX_NAME), %.o,$(call FIND_FILE,$(1),$(EX_NAME)))
+ALL_OBJ		= $(call GET_OBJS,$(SRC))
 
 .PHONY: all clean
 all: $(OUTS)
 	@echo Done
 
-EUkitlib.a: $(OBJS)
+EUkitlib.a: $(ALL_OBJ)
 	@echo Linking $@
 	@ar cr $@ $^
 
-logclib.a: $(SRC)/logc/logc.$(EX_NAME)
+logclib.a: $(call GET_OBJS,$(SRC)/logc)
 	@echo Linking $@
 	@ar cr $@ $^
 
@@ -38,7 +37,7 @@ logclib.a: $(SRC)/logc/logc.$(EX_NAME)
 	@$(CXX) $(CXX_FLAGS) -I$(INCLUDE) -c $< -o $@
 
 clean:
-	@echo remove $(OBJS)
-	@$(RM) $(OBJS)
+	@echo remove $(ALL_OBJ)
+	@$(RM) $(ALL_OBJ)
 	@echo remove $(OUTS)
 	@$(RM) $(OUTS)
