@@ -7,3 +7,7 @@
 1. [LogC](doc/LogC.md)
 
 	一个 C 风格日志输出工具
+
+2. [ini](doc/ini.md)
+
+	ini 格式配置文件分析工具
