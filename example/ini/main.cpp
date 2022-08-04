@@ -101,27 +101,28 @@ void conf2() {
 
 	Parser p;
 	p.setParseRule(conf2ParserRule)
-		.addInt("连接设置", "监听端口号", con_port, checkPort)
-		.addInt("连接设置", "设备连接间隔", con_dev_con,
-				[](int i) { return i >= 5 && i <= 600; })
-		.addInt("连接设置", "设备采样间隔", con_dev_samp,
-				[](int i) { return i > 0; })
-		.addString("数据库", "数据库名", db_dbname)
-		.addString("数据库", "用户名", db_uname)
-		.addString("数据库", "服务器IP地址", db_addr)
-		.addInt("数据库", "服务器端口号", db_port, checkPort)
-		.addString("数据库", "用户口令", db_pass)
-		.addInt("系统设置", "未应答超时", sys_noans_timeout,
-				[](int i) { return i >= 2 && i <= 120; })
-		.addInt("系统设置", "传输超时", sys_trans_timeout,
-				[](int i) { return i >= 2 && i <= 120; })
-		.addInt("系统设置", "分日志大小", log_sub, [](int i) { return i > 0; })
-		.addInt("系统设置", "主日志大小", log_main, [](int i) { return i > 0; })
-		.addInt("DEBUG设置", "屏幕显示", log_main)
-		.addString("DEBUG设置", "tmp_packet", dbg_t_p, conf2dbg4b)
-		.addString("DEBUG设置", "tmp_socket", dbg_t_s, conf2dbg4b)
-		.addString("DEBUG设置", "dev_packet", dbg_d_p, conf2dbg4b)
-		.addString("DEBUG设置", "dev_socket", dbg_d_s, conf2dbg4b);
+		.bindInt("连接设置", "监听端口号", con_port, checkPort)
+		.bindInt("连接设置", "设备连接间隔", con_dev_con,
+				 [](int i) { return i >= 5 && i <= 600; })
+		.bindInt("连接设置", "设备采样间隔", con_dev_samp,
+				 [](int i) { return i > 0; })
+		.bindString("数据库", "数据库名", db_dbname)
+		.bindString("数据库", "用户名", db_uname)
+		.bindString("数据库", "服务器IP地址", db_addr)
+		.bindInt("数据库", "服务器端口号", db_port, checkPort)
+		.bindString("数据库", "用户口令", db_pass)
+		.bindInt("系统设置", "未应答超时", sys_noans_timeout,
+				 [](int i) { return i >= 2 && i <= 120; })
+		.bindInt("系统设置", "传输超时", sys_trans_timeout,
+				 [](int i) { return i >= 2 && i <= 120; })
+		.bindInt("系统设置", "分日志大小", log_sub, [](int i) { return i > 0; })
+		.bindInt("系统设置", "主日志大小", log_main,
+				 [](int i) { return i > 0; })
+		.bindInt("DEBUG设置", "屏幕显示", log_main)
+		.bindString("DEBUG设置", "tmp_packet", dbg_t_p, conf2dbg4b)
+		.bindString("DEBUG设置", "tmp_socket", dbg_t_s, conf2dbg4b)
+		.bindString("DEBUG设置", "dev_packet", dbg_d_p, conf2dbg4b)
+		.bindString("DEBUG设置", "dev_socket", dbg_d_s, conf2dbg4b);
 	p.parseFile("conf2.ini");
 	if (!p.success()) {
 		cout << p.errmsg() << endl;
