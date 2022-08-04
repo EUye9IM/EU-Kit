@@ -5,7 +5,7 @@ EX_NAME		:= cpp
 SRC			:= src
 INCLUDE		:= include
 
-OUTS		:= EUkitlib.a logclib.a
+OUTS		:= EUkitlib.a logclib.a inilib.a
 
 ifeq ($(OS),Windows_NT)
 # PLATFORM = "Windows"
@@ -29,6 +29,10 @@ EUkitlib.a: $(ALL_OBJ)
 	@ar cr $@ $^
 
 logclib.a: $(call GET_OBJS,$(SRC)/logc)
+	@echo Linking $@
+	@ar cr $@ $^
+
+inilib.a: $(call GET_OBJS,$(SRC)/ini)
 	@echo Linking $@
 	@ar cr $@ $^
 
