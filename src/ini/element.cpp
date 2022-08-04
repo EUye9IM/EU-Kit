@@ -1,7 +1,8 @@
 #include <ini/ini.h>
 
 using std::string;
-namespace EUkit::ini {
+namespace EUkit {
+namespace ini {
 
 // Field
 Field::Field() {}
@@ -31,8 +32,7 @@ Element::Element() {
 };
 Element::Element(Type type, const std::string &section,
 				 const std::string &keyname, const Value &default_value,
-				 CheckFunc check_func, bool is_exist,
-				 const Value &real_valuel) {
+				 CheckFunc check_func, bool is_exist, const Value &real_value) {
 	this->type = type;
 	this->section = section;
 	this->keyname = keyname;
@@ -44,7 +44,7 @@ Element::Element(Type type, const std::string &section,
 void Element::set(Type type, const std::string &section,
 				  const std::string &keyname, const Value &default_value,
 				  CheckFunc check_func, bool is_exist,
-				  const Value &real_valuel) {
+				  const Value &real_value) {
 	this->type = type;
 	this->section = section;
 	this->keyname = keyname;
@@ -53,4 +53,5 @@ void Element::set(Type type, const std::string &section,
 	this->is_exist = is_exist;
 	this->real_value = real_value;
 }
-} // namespace EUkit::ini
+} // namespace ini
+} // namespace EUkit

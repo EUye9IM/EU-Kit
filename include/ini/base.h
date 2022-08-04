@@ -3,7 +3,8 @@
 
 #include <string>
 
-namespace EUkit::ini {
+namespace EUkit {
+namespace ini {
 enum class Type { INT, STR };
 struct Value {
 	int Int;
@@ -43,6 +44,6 @@ public:
 // return true if error
 bool _defaultParser(const std::string &textline, std::string &section,
 					std::string &keyname, std::string &value);
-} // namespace EUkit::ini
-
+} // namespace ini
+} // namespace EUkit
 #endif

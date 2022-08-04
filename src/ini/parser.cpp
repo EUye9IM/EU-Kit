@@ -1,10 +1,11 @@
 #include <fstream>
 #include <ini/ini.h>
 
-using namespace EUkit::ini;
 using std::string;
 using std::to_string;
 
+namespace EUkit {
+namespace ini {
 Parser::Parser() {
 	_is_sucess = false;
 	this->setParseRule(_defaultParser);
@@ -201,3 +202,5 @@ void Parser::_parse(std::istream &in) {
 		}
 	}
 }
+} // namespace ini
+} // namespace EUkit

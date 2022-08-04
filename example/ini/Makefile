@@ -1,4 +1,4 @@
-CXX			:= g++
+CXX			:= clang++
 CXX_FLAGS	:= -Wall -Werror -O2 -std=c++11
 EX_NAME		:= cpp
 

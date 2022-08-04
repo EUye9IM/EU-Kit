@@ -5,7 +5,8 @@
 #include <istream>
 #include <map>
 
-namespace EUkit::ini {
+namespace EUkit {
+namespace ini {
 class Parser {
 public:
 	Parser();
@@ -43,5 +44,6 @@ private:
 	std::map<Field, int *> _bind_int;
 	std::map<Field, std::string *> _bind_string;
 };
-} // namespace EUkit::ini
+} // namespace ini
+} // namespace EUkit
 #endif

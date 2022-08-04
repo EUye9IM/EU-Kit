@@ -6,7 +6,8 @@ using std::regex_match;
 using std::smatch;
 using std::string;
 
-namespace EUkit::ini {
+namespace EUkit {
+namespace ini {
 // return true if success
 bool _defaultParser(const std::string &textline, std::string &section,
 					std::string &keyname, std::string &value) {
@@ -27,4 +28,5 @@ bool _defaultParser(const std::string &textline, std::string &section,
 	}
 	return ret;
 }
-} // namespace EUkit::ini
+} // namespace ini
+} // namespace EUkit
