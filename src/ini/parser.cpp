@@ -158,7 +158,7 @@ void Parser::_parse(std::istream &in) {
 					"Warning: Line:" + to_string(lineCnt) + " Invalid Value: ";
 				if (section != "")
 					_log += section + ".";
-				_log += keyname + "=" + to_string(val) + ".\n";
+				_log += keyname + " = " + to_string(val) + ".\n";
 				continue;
 			}
 			e->second.real_value.Int = val;
