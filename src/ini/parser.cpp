@@ -49,7 +49,7 @@ Parser &Parser::bindString(const std::string &section,
 	this->_bind_string[Field(section, keyname)] = &value;
 	return *this;
 }
-bool Parser::parseFile(const char *file_path) {
+bool Parser::parseFile(const std::string&file_path) {
 	std::ifstream ifs(file_path);
 	if (!(ifs.good() && ifs.is_open())) {
 		_log +=

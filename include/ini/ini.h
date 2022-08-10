@@ -23,7 +23,7 @@ public:
 					   std::string &value,
 					   bool (*check_func)(const std::string &) = nullptr);
 
-	bool parseFile(const char *file_path);
+	bool parseFile(const std::string &file_path);
 	bool success() const;
 	const char *errmsg() const;
 
