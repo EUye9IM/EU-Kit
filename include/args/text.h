@@ -3,31 +3,30 @@
 namespace EUkit {
 namespace args {
 namespace _internal {
-static const char *UNKNOWN_TYPE = "Unexpect type.";
+extern const char *UNKNOWN_TYPE;
 
-static const char *ARG_BAD_NAME = "Bad argument name.";
-static const char *ARG_REPET = "Repetitive argument name.";
+extern const char *ARG_BAD_NAME;
+extern const char *ARG_REPET;
 
-static const char *PARSER_BAD_SHORTNAME = "Bad short name.";
-static const char *PARSER_BAD_LONGNAME = "Bad long name.";
+extern const char *PARSER_BAD_SHORTNAME;
+extern const char *PARSER_BAD_LONGNAME;
 
-static const char *TYPE_NAME[] = {"", "{integer}", "{decimal}", "{string}"};
+extern const char *TYPE_NAME[];
 
-static const char *INFO_USSAGE = "Ussage :";
-static const char *INFO_OPTIONS = "Options :";
-static const char *INFO_UNREQ_OPTIONS = "[options]";
+extern const char *INFO_USSAGE;
+extern const char *INFO_OPTIONS;
+extern const char *INFO_UNREQ_OPTIONS;
 
-static const char *PARSE_MUTI = "Parse multiple times.";
-static const char *PARSE_ERR = "Error : ";
-static const char *PARSE_SUCCESS = "Success.";
-static const char *PARSE_RESTPARAM =
-	" Extra or unknown parameters are prohibited.";
-static const char *PARSE_MULTIPARAM = " Parameters are set multiple times.";
+extern const char *PARSE_MUTI;
+extern const char *PARSE_ERR;
+extern const char *PARSE_SUCCESS;
+extern const char *PARSE_RESTPARAM;
+extern const char *PARSE_MULTIPARAM;
 
-static const char *PARSE_MISSING = " Missing argument.";
-static const char *PARSE_NOTENOUGH = " Not enough value.";
-static const char *PARSE_TYPEERR = " Wrong value type.";
-static const char *PARSE_CHECKFAILED = " Illegal value.";
+extern const char *PARSE_MISSING;
+extern const char *PARSE_NOTENOUGH;
+extern const char *PARSE_TYPEERR;
+extern const char *PARSE_CHECKFAILED;
 
 } // namespace _internal
 } // namespace args

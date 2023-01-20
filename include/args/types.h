@@ -10,7 +10,7 @@ enum Type { Flag, Int, Dec, Str };
 namespace _internal {
 
 
-static const int g_type_param_num[] = {0, 1, 1, 1};
+extern const int g_type_param_num[];
 
 
 // Type to C++ type
