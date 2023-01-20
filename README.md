@@ -11,3 +11,7 @@
 2. [ini](doc/ini.md)
 
 	ini 格式配置文件分析工具
+
+3. [args](doc/args.md)
+
+	设定命令行参数工具
