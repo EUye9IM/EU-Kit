@@ -2,8 +2,8 @@
 #define EUKIT_ARGS_UTIL
 #include <string>
 
-static const int RET_BAD=-1;
-bool isArgName(const std::string & str);
+extern const int RET_BAD;
 
+bool isArgName(const std::string &str);
 
 #endif

@@ -1,5 +1,4 @@
-#include <args/args.h>
-#include <args/text.h>
+#include <args/main.h>
 using namespace std;
 
 namespace EUkit {
@@ -29,57 +28,7 @@ std::string Argument::getLongName() {
 bool Argument::isRequired() {
 	return _is_required && (g_type_param_num[_type] != 0);
 }
-// MULTITYPES
-template <>
-ArgumentPointer Argument::check<Flag>(
-	std::function<bool(const typename RealType<Flag>::Type)> const
-		check_function) {
-	_checkfunc.Flag = check_function;
-	return shared_from_this();
-}
-template <>
-ArgumentPointer Argument::check<Int>(
-	std::function<bool(const typename RealType<Int>::Type)> const
-		check_function) {
-	_checkfunc.Int = check_function;
-	return shared_from_this();
-}
-template <>
-ArgumentPointer Argument::check<Dec>(
-	std::function<bool(const typename RealType<Dec>::Type)> const
-		check_function) {
-	_checkfunc.Dec = check_function;
-	return shared_from_this();
-}
-template <>
-ArgumentPointer Argument::check<Str>(
-	std::function<bool(const typename RealType<Str>::Type)> const
-		check_function) {
-	_checkfunc.Str = check_function;
-	return shared_from_this();
-}
-// MULTITYPES
-template <>
-ArgumentPointer
-Argument::defaultValue<Int>(const typename RealType<Int>::Type default_value) {
-	_is_required = false;
-	_value.Int = default_value;
-	return shared_from_this();
-}
-template <>
-ArgumentPointer
-Argument::defaultValue<Dec>(const typename RealType<Dec>::Type default_value) {
-	_is_required = false;
-	_value.Dec = default_value;
-	return shared_from_this();
-}
-template <>
-ArgumentPointer
-Argument::defaultValue<Str>(const typename RealType<Str>::Type default_value) {
-	_is_required = false;
-	_value.Str = default_value;
-	return shared_from_this();
-}
+
 
 bool Argument::match(const std::string &str) {
 	if (_short_name) {
@@ -103,7 +52,7 @@ int Argument::setArg(int argc, int &pos, char *const *const argv) {
 	case Int: {
 		int ret, val;
 		char c;
-		ret = sscanf(argv[pos+1], "%d%c", &val, &c);
+		ret = sscanf(argv[pos + 1], "%d%c", &val, &c);
 		if (1 == ret) {
 			_value.Int = val;
 		} else
@@ -113,14 +62,14 @@ int Argument::setArg(int argc, int &pos, char *const *const argv) {
 		double val;
 		int ret;
 		char c;
-		ret = sscanf(argv[pos+1], "%lf%c", &val, &c);
+		ret = sscanf(argv[pos + 1], "%lf%c", &val, &c);
 		if (1 == ret) {
 			_value.Dec = val;
 		} else
 			return RET_TYPEERR;
 	} break;
 	case Str:
-		_value.Str = argv[pos+1];
+		_value.Str = argv[pos + 1];
 		break;
 	default:
 		throw logic_error(UNKNOWN_TYPE);
@@ -161,7 +110,7 @@ _internal::ArgumentPointer newArg(char short_name) {
 	return std::make_shared<_internal::Argument>(short_name, "");
 }
 _internal::ArgumentPointer newArg(const std::string &long_name) {
-	return std::make_shared<_internal::Argument>(NULL, long_name);
+	return std::make_shared<_internal::Argument>('\0', long_name);
 }
 _internal::ArgumentPointer newArg(char short_name,
 								  const std::string &long_name) {

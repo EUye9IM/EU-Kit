@@ -1,5 +1,4 @@
-#include <args/args.h>
-#include <args/text.h>
+#include <args/main.h>
 
 #include "util.h"
 
@@ -34,31 +33,6 @@ ArgParser &ArgParser::add(_internal::ArgumentPointer argument) {
 ArgParser &ArgParser::enableRestParam() {
 	_enable_rest_param = true;
 	return *this;
-}
-// MULTITYPES
-template <> bool ArgParser::val<Flag>(char short_name) {
-	return _val(short_name).Flag;
-}
-template <> bool ArgParser::val<Flag>(const string &long_name) {
-	return _val(long_name).Flag;
-}
-template <> int ArgParser::val<Int>(char short_name) {
-	return _val(short_name).Int;
-}
-template <> int ArgParser::val<Int>(const string &long_name) {
-	return _val(long_name).Int;
-}
-template <> double ArgParser::val<Dec>(char short_name) {
-	return _val(short_name).Dec;
-}
-template <> double ArgParser::val<Dec>(const string &long_name) {
-	return _val(long_name).Dec;
-}
-template <> string ArgParser::val<Str>(char short_name) {
-	return _val(short_name).Str;
-}
-template <> string ArgParser::val<Str>(const string &long_name) {
-	return _val(long_name).Str;
 }
 
 // 取参数值
