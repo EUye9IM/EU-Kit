@@ -29,6 +29,7 @@ template <> struct RealType<Type::Str> {
 };
 
 struct Value {
+	Value();
 	RealType<Type::Flag>::Type Flag;
 	RealType<Type::Int>::Type Int;
 	RealType<Type::Dec>::Type Dec;

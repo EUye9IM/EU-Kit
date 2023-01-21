@@ -4,6 +4,14 @@ using namespace std;
 namespace EUkit {
 namespace args {
 namespace _internal {
+Value::Value() {
+	// MULTITYPES
+	Flag = false;
+	Int = 0;
+	Dec = 0;
+	Str = "";
+}
+
 Argument::Argument(char short_name, const std::string &long_name)
 	: _short_name(short_name), _long_name(long_name), _is_required(true),
 	  _is_exist(false), _info(""), _type(Type::Flag) {
@@ -28,7 +36,6 @@ std::string Argument::getLongName() {
 bool Argument::isRequired() {
 	return _is_required && (g_type_param_num[_type] != 0);
 }
-
 
 bool Argument::match(const std::string &str) {
 	if (_short_name) {
