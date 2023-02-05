@@ -1,5 +1,5 @@
-#ifndef EUKIT_LOGC_LOGS
-#define EUKIT_LOGC_LOGS
+#ifndef EUKIT_LOGS_LOGS
+#define EUKIT_LOGS_LOGS
 #include <fstream>
 #include <functional>
 #include <sstream>
