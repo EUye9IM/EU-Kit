@@ -1,4 +1,4 @@
-# LogC
+# LogS
 
 ## 简介
 
@@ -25,3 +25,5 @@ setLevel 方法设定日志级别
 其他也没啥特性了，就很朴素
 
 具体看看例子吧
+
+[main.cpp](../example/logs/main.cpp)

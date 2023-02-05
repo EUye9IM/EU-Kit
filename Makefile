@@ -5,7 +5,7 @@ EX_NAME		:= cpp
 SRC			:= src
 INCLUDE		:= include
 
-OUTS		:= libEUkit.a liblogc.a libini.a libargs.a
+OUTS		:= libEUkit.a libargs.a libini.a liblogc.a liblogs.a
 
 ifeq ($(OS),Windows_NT)
 # PLATFORM = "Windows"
@@ -28,15 +28,16 @@ libEUkit.a: $(ALL_OBJ)
 	@echo Linking $@
 	@ar cr $@ $^
 
-liblogc.a: $(call GET_OBJS,$(SRC)/logc)
+libargs.a: $(call GET_OBJS,$(SRC)/args)
 	@echo Linking $@
 	@ar cr $@ $^
-
 libini.a: $(call GET_OBJS,$(SRC)/ini)
 	@echo Linking $@
 	@ar cr $@ $^
-
-libargs.a: $(call GET_OBJS,$(SRC)/args)
+liblogc.a: $(call GET_OBJS,$(SRC)/logc)
+	@echo Linking $@
+	@ar cr $@ $^
+liblogs.a: $(call GET_OBJS,$(SRC)/logs)
 	@echo Linking $@
 	@ar cr $@ $^
 

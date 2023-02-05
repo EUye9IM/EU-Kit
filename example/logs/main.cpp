@@ -30,8 +30,8 @@ int main() {
 	
 	cout << "colorful theme" << endl;
 	log.setTheme(colorful_theme);
-	log[LDEBUG] << "debug: green";
-	log[LINFO] << "info: blue";
+	log[LDEBUG] << "debug: blue";
+	log[LINFO] << "info: green";
 	log[LWARN] << "warning: yellow";
 	log[LERR] << "error: red";
 	return 0;

@@ -38,7 +38,7 @@ string &replace_all(string &src, const string &old_value,
 }
 static const char *FLAG[] = {"[ Debug ] ", "[ Info  ] ", "[ Warn  ] ",
 							 "[ Error ] "};
-static const char *COLOR[] = {GREEN, BLUE, YELLOW, RED};
+static const char *COLOR[] = {BLUE, GREEN, YELLOW, RED};
 
 LogTheme EUkit::logs::default_theme([](const string &msg, Level level) {
 	stringstream s;
