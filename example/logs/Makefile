@@ -1,5 +1,5 @@
 CXX			:= g++
-CXX_FLAGS	:= -Wall -Werror -O2 -std=c++11
+CXX_FLAGS	:= -Wall -Werror -g -std=c++11
 EX_NAME		:= cpp
 
 SRC			:= ../../src
@@ -7,7 +7,9 @@ INCLUDE		:= ../../include
 
 OUTS		:= test.exe
 
-SRCS		:= $(wildcard *.$(EX_NAME)) $(wildcard $(SRC)/logc/*.$(EX_NAME))
+MODNAME		:= logs
+
+SRCS		:= $(wildcard *.$(EX_NAME)) $(wildcard $(SRC)/$(MODNAME)/*.$(EX_NAME))
 OBJS		:= $(patsubst %.$(EX_NAME), %.o, $(SRCS))
 
 ifeq ($(OS),Windows_NT)
@@ -35,8 +37,7 @@ clean:
 	@$(RM) $(OUTS)
 	@echo remove *.o
 	@$(RM) *.o
-	@echo remove *log
-	@$(RM) *.log
+	
 
-# test:
-# 	echo $(OBJS)
+test:
+	echo $(OBJS)
