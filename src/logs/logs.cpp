@@ -8,8 +8,7 @@
 using namespace std;
 using namespace EUkit::logs;
 
-string _end(const std::string &) { return ""; }
-void addTimedate(stringstream &ss) {
+static void addTimedate(stringstream &ss) {
 	auto t = chrono::system_clock::to_time_t(chrono::system_clock::now());
 	// put_time
 	auto tm = localtime(&t);
@@ -24,7 +23,7 @@ static const char *GREEN = "\33[36m";
 static const char *BLUE = "\33[34m";
 static const char *YELLOW = "\33[33m";
 static const char *RED = "\33[31m";
-string &replace_all(string &src, const string &old_value,
+static string &replace_all(string &src, const string &old_value,
 					const string &new_value) {
 	// 每次重新定位起始位置，防止上轮替换后的字符串形成新的old_value
 	for (string::size_type pos(0); pos != string::npos;
