@@ -20,13 +20,13 @@ int main() {
 	log[LDEBUG] << "debug(disable)";
 	log[LINFO] << "info";
 	log[LWARN] << "warning";
-	log[LERR] << "error";
+	log[LERROR] << "error";
 	cout << "change level to LDEBUG" << endl;
 	log.setLevel(LDEBUG);
 	log[LDEBUG] << "debug(enable)";
 	log[LINFO] << "info";
 	log[LWARN] << "warning";
-	log[LERR] << "error";
+	log[LERROR] << "error";
 
 	cout << "set prefix" << endl;
 	log.setPrefix("prefix: ");
@@ -44,7 +44,7 @@ int main() {
 	log[LINFO] << "info: green";
 	sublog[LINFO] << "sub log also turn to green";
 	log[LWARN] << "warning: yellow";
-	log[LERR] << "error: red";
+	log[LERROR] << "error: red";
 
 	cout<<"you can also create sublog by a sublog"<<endl;
 	Logs subsublog(sublog,"anothersub: ");
