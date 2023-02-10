@@ -27,9 +27,16 @@ int main() {
 	log[LINFO] << "info";
 	log[LWARN] << "warning";
 	log[LERR] << "error";
+
+	cout << "set prefix" << endl;
+	log.setPrefix("prefix: ");
+	log[LINFO] << "info";
+	cout << "clear prefix" << endl;
+	log.setPrefix("");
+	log[LINFO] << "info";
 	
 	cout << "colorful theme" << endl;
-	log.setTheme(colorful_theme);
+	log.setTheme(vt100_theme);
 	log[LDEBUG] << "debug: blue";
 	log[LINFO] << "info: green";
 	log[LWARN] << "warning: yellow";

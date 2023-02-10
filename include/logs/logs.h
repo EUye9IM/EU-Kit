@@ -8,12 +8,12 @@
 namespace EUkit {
 namespace logs {
 class Logs;
-enum Level { LDEBUG, LINFO, LWARN, LERR};
+enum Level { LDEBUG, LINFO, LWARN, LERR };
 namespace _internal {
 class _Buf {
 public:
 	_Buf(Logs *plogs, Level level);
-	_Buf(_Buf&& b);
+	_Buf(_Buf &&b);
 	~_Buf();
 	template <typename T> _Buf &operator<<(const T value) {
 		buf << value;
@@ -27,11 +27,10 @@ private:
 	bool is_moved;
 };
 
-
 } // namespace _internal
-using LogTheme = std::function<std::string(const std::string &,Level)>;
+using LogTheme = std::function<std::string(const std::string &, Level)>;
 extern LogTheme default_theme;
-extern LogTheme colorful_theme;
+extern LogTheme vt100_theme;
 
 class Logs {
 	friend class _internal::_Buf;
@@ -43,6 +42,7 @@ public:
 	~Logs();
 	void setTheme(const LogTheme);
 	void setLevel(Level level);
+	void setPrefix(const std::string &prefix);
 	void open(std::ostream &out);
 	int open(const std::string &filename);
 	_internal::_Buf operator[](Level level);
@@ -54,7 +54,7 @@ public:
 private:
 	void close();
 	void write(Level level, const std::string &msg);
-
+	std::string prefix;
 	std::ostream *out;
 	std::ofstream outf;
 	LogTheme theme;

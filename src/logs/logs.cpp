@@ -24,7 +24,7 @@ static const char *BLUE = "\33[34m";
 static const char *YELLOW = "\33[33m";
 static const char *RED = "\33[31m";
 static string &replace_all(string &src, const string &old_value,
-					const string &new_value) {
+						   const string &new_value) {
 	// 每次重新定位起始位置，防止上轮替换后的字符串形成新的old_value
 	for (string::size_type pos(0); pos != string::npos;
 		 pos += new_value.length()) {
@@ -49,7 +49,7 @@ LogTheme EUkit::logs::default_theme([](const string &msg, Level level) {
 
 	return s.str();
 });
-LogTheme EUkit::logs::colorful_theme([](const string &msg, Level level) {
+LogTheme EUkit::logs::vt100_theme([](const string &msg, Level level) {
 	stringstream s;
 	s << COLOR[level];
 	string msg2(msg);
@@ -70,9 +70,7 @@ _Buf::_Buf(_Buf &&b)
 _Buf::~_Buf() {
 	if (is_moved)
 		return;
-	string msg = this->plogs->theme(this->buf.str(), this->level);
-	msg += "\n";
-	this->plogs->write(this->level, msg);
+	this->plogs->write(this->level, this->buf.str());
 }
 
 } // namespace EUkit::logs::_internal
@@ -90,6 +88,7 @@ Logs::Logs(const std::string &filename)
 Logs::~Logs() { this->close(); }
 void Logs::setTheme(const LogTheme config) { this->theme = config; }
 void Logs::setLevel(Level level) { this->level = level; }
+void Logs::setPrefix(const string &prefix) { this->prefix = prefix; }
 void Logs::open(std::ostream &out) {
 	close();
 	this->out = &out;
@@ -121,7 +120,7 @@ void Logs::write(Level level, const std::string &msg) {
 		return;
 	if (out) {
 		lock_guard<mutex> locker(lock);
-		*out << msg;
+		*out << theme(prefix + msg, level) << "\n";
 		out->flush();
 	}
 }
