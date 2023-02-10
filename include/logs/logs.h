@@ -2,6 +2,7 @@
 #define EUKIT_LOGS_LOGS
 #include <fstream>
 #include <functional>
+#include <mutex>
 #include <sstream>
 #include <string>
 
@@ -39,26 +40,26 @@ public:
 	Logs();
 	Logs(std::ostream &out);
 	Logs(const std::string &filename);
+	Logs(Logs &log, const std::string &prefix = std::string());
 	~Logs();
-	void setTheme(const LogTheme);
-	void setLevel(Level level);
-	void setPrefix(const std::string &prefix);
-	void open(std::ostream &out);
-	int open(const std::string &filename);
+	Logs &setTheme(const LogTheme);
+	Logs &setLevel(Level level);
+	Logs &setPrefix(const std::string &prefix);
+	Logs &open(std::ostream &out);
+	Logs &open(const std::string &filename);
+	Logs &open(Logs &log);
 	_internal::_Buf operator[](Level level);
-	// _internal::_Buf debug;
-	// _internal::_Buf info;
-	// _internal::_Buf warning;
-	// _internal::_Buf error;
 
 private:
 	void close();
 	void write(Level level, const std::string &msg);
 	std::string prefix;
+	Logs *log;
 	std::ostream *out;
 	std::ofstream outf;
 	LogTheme theme;
 	Level level;
+	std::mutex write_lock;
 };
 } // namespace logs
 } // namespace EUkit

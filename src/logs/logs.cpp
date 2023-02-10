@@ -3,7 +3,6 @@
 #include <iomanip>
 #include <iostream>
 #include <logs/logs.h>
-#include <mutex>
 
 using namespace std;
 using namespace EUkit::logs;
@@ -75,38 +74,60 @@ _Buf::~_Buf() {
 
 } // namespace EUkit::logs::_internal
 
-Logs::Logs() : out(&cout), outf(), theme(default_theme), level(Level::LINFO) {}
+Logs::Logs()
+	: prefix(), log(nullptr), out(&cout), outf(), theme(default_theme),
+	  level(Level::LINFO) {}
 Logs::Logs(std::ostream &out)
-	: out(&out), outf(), theme(default_theme), level(Level::LINFO) {}
+	: prefix(), log(nullptr), out(&out), outf(), theme(default_theme),
+	  level(Level::LINFO) {}
 Logs::Logs(const std::string &filename)
-	: out(&outf), outf(filename, ios::out | ios::app), theme(default_theme),
-	  level(Level::LINFO) {
+	: prefix(), log(nullptr), out(&outf), outf(filename, ios::out | ios::app),
+	  theme(default_theme), level(Level::LINFO) {
 	if (!outf) {
 		throw runtime_error("cannot open file");
 	}
 }
+Logs::Logs(Logs &log, const std::string &prefix)
+	: prefix(prefix), log(&log), out(nullptr), outf(), theme(default_theme),
+	  level(Level::LINFO) {}
 Logs::~Logs() { this->close(); }
-void Logs::setTheme(const LogTheme config) { this->theme = config; }
-void Logs::setLevel(Level level) { this->level = level; }
-void Logs::setPrefix(const string &prefix) { this->prefix = prefix; }
-void Logs::open(std::ostream &out) {
+Logs &Logs::setTheme(const LogTheme config) {
+	this->theme = config;
+	return *this;
+}
+Logs &Logs::setLevel(Level level) {
+	this->level = level;
+	return *this;
+}
+Logs &Logs::setPrefix(const string &prefix) {
+	this->prefix = prefix;
+	return *this;
+}
+Logs &Logs::open(std::ostream &out) {
 	close();
 	this->out = &out;
+	return *this;
 }
-int Logs::open(const std::string &filename) {
+Logs &Logs::open(const std::string &filename) {
 	close();
 	outf.open(filename, ios::out | ios::app);
 	if (!outf) {
-		return -1;
+		throw runtime_error("cannot open file");
 	}
 	out = &outf;
-	return 0;
+	return *this;
+}
+Logs &Logs::open(Logs &log) {
+	close();
+	this->log = &log;
+	return *this;
 }
 
 _internal::_Buf Logs::operator[](Level level) {
 	return move(_internal::_Buf(this, level));
 }
 void Logs::close() {
+	log = nullptr;
 	out = nullptr;
 	if (outf.is_open()) {
 		outf.close();
@@ -115,11 +136,12 @@ void Logs::close() {
 }
 
 void Logs::write(Level level, const std::string &msg) {
-	static mutex lock;
 	if (this->level > level)
 		return;
-	if (out) {
-		lock_guard<mutex> locker(lock);
+	lock_guard<mutex> locker(write_lock);
+	if (log) {
+		log[0][level] << prefix + msg;
+	} else if (out) {
 		*out << theme(prefix + msg, level) << "\n";
 		out->flush();
 	}

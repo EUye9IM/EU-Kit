@@ -34,12 +34,22 @@ int main() {
 	cout << "clear prefix" << endl;
 	log.setPrefix("");
 	log[LINFO] << "info";
-	
+
+	Logs sublog(log,"submodule: ");
+	sublog[LINFO] << "info";
+
 	cout << "colorful theme" << endl;
 	log.setTheme(vt100_theme);
 	log[LDEBUG] << "debug: blue";
 	log[LINFO] << "info: green";
+	sublog[LINFO] << "sub log also turn to green";
 	log[LWARN] << "warning: yellow";
 	log[LERR] << "error: red";
+
+	cout<<"you can also create sublog by a sublog"<<endl;
+	Logs subsublog(sublog,"anothersub: ");
+	subsublog[LINFO] << "info";
+
+
 	return 0;
 }
