@@ -9,7 +9,7 @@
 namespace EUkit {
 namespace logs {
 class Logs;
-enum Level { LDEBUG, LINFO, LWARN, LERR };
+enum Level { LDEBUG, LINFO, LWARN, LERROR };
 namespace _internal {
 class _Buf {
 public:
