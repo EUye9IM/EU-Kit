@@ -17,11 +17,13 @@ int main() {
 	log[LINFO] << "bala...\nbalabala...\nbalabalabala...";
 
 	cout << "level(default: LINFO)" << endl;
+	log[LTRACE] << "trace(disable)";
 	log[LDEBUG] << "debug(disable)";
 	log[LINFO] << "info";
 	log[LWARN] << "warning";
 	log[LERROR] << "error";
 	cout << "change level to LDEBUG" << endl;
+	log[LTRACE] << "trace(disable)";
 	log.setLevel(LDEBUG);
 	log[LDEBUG] << "debug(enable)";
 	log[LINFO] << "info";
@@ -38,9 +40,12 @@ int main() {
 	Logs sublog(log,"submodule: ");
 	sublog[LINFO] << "info";
 
+	cout << "change level to LTRACE" << endl;
+	log.setLevel(LTRACE);
 	cout << "colorful theme" << endl;
 	log.setTheme(vt100_theme);
-	log[LDEBUG] << "debug: blue";
+	log[LTRACE] << "trace: blue";
+	log[LDEBUG] << "debug: cyan";
 	log[LINFO] << "info: green";
 	sublog[LINFO] << "sub log also turn to green";
 	log[LWARN] << "warning: yellow";

@@ -6,7 +6,7 @@
 
 ## 使用方式
 
-目前有四个级别，LDEBUG、LINFO、LWARN、LERROR
+目前有五个级别，LTRACE、LDEBUG、LINFO、LWARN、LERROR
 
 构造 Logs 类，默认输出到 cout，可以 ostream 参数或者字符串打开文件追加写入，也可以是另一个 Logs 对象
 

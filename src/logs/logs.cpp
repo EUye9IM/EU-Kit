@@ -17,11 +17,20 @@ static void addTimedate(stringstream &ss) {
 	   << tm->tm_sec << " ";
 }
 
+// static const char *CLEAR = "\33[0m";
+// static const char *BLUE = "\33[34m";
+// static const char *CYAN = "\33[36m";
+// static const char *GREEN = "\33[32m";
+// static const char *YELLOW = "\33[33m";
+// static const char *RED = "\33[31m";
+
 static const char *CLEAR = "\33[0m";
-static const char *GREEN = "\33[36m";
-static const char *BLUE = "\33[34m";
-static const char *YELLOW = "\33[33m";
-static const char *RED = "\33[31m";
+static const char *BLUE = "\33[94m";
+static const char *CYAN = "\33[96m";
+static const char *GREEN = "\33[92m";
+static const char *YELLOW = "\33[93m";
+static const char *RED = "\33[91m";
+
 static string &replace_all(string &src, const string &old_value,
 						   const string &new_value) {
 	// 每次重新定位起始位置，防止上轮替换后的字符串形成新的old_value
@@ -34,9 +43,9 @@ static string &replace_all(string &src, const string &old_value,
 	}
 	return src;
 }
-static const char *FLAG[] = {"[ Debug ] ", "[ Info  ] ", "[ Warn  ] ",
-							 "[ Error ] "};
-static const char *COLOR[] = {BLUE, GREEN, YELLOW, RED};
+static const char *FLAG[] = {"[ Trace ] ", "[ Debug ] ", "[ Info  ] ",
+							 "[ Warn  ] ", "[ Error ] "};
+static const char *COLOR[] = {BLUE, CYAN, GREEN, YELLOW, RED};
 
 LogTheme EUkit::logs::default_theme([](const string &msg, Level level) {
 	stringstream s;
