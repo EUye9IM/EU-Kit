@@ -20,8 +20,7 @@
 
 **使用流与logs对象作为输出时注意作用域/生命周期**
 
-setTheme 方法可以设定输出格式，内置 defaul_theme 与 vt
-100_theme，后者比前者多了 VT100 的色彩支持。二者会将每个 '\n' 后添加填充以保证多行输出时的对齐，这点注意
+setTheme 方法可以设定输出格式，内置模板函数 def_theme 包含 FLAG：VT100/DATE/TIME/MICRO_SEC/GMT_TIME ，分别表示支持输出VT100色彩、日期、时间、毫秒和使用GMT时间。该函数在 '\n' 后添加填充以保证多行输出时的对齐。
 
 setLevel 方法设定日志级别
 
@@ -36,3 +35,9 @@ setPrefix 方法设定日志输出前缀，用 Logs 对象构造时日志前缀�
 具体看看例子吧
 
 [main.cpp](../example/logs/main.cpp)
+
+![logs_example.png](assets/logs_example.png)
+
+## TODO
+
+def_theme 获取时间的方式（localtime,gmtime）线程不安全，但 C++ 获取日历的方式在C++20内，姑且先忽略这个不安全

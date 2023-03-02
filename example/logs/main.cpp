@@ -37,13 +37,13 @@ int main() {
 	log.setPrefix("");
 	log[LINFO] << "info";
 
-	Logs sublog(log,"submodule: ");
+	Logs sublog(log, "submodule: ");
 	sublog[LINFO] << "info";
 
 	cout << "change level to LTRACE" << endl;
 	log.setLevel(LTRACE);
 	cout << "colorful theme" << endl;
-	log.setTheme(vt100_theme);
+	log.setTheme(def_theme<VT100 | DATE | TIME | MICRO_SEC /* | GMT_TIME */>);
 	log[LTRACE] << "trace: blue";
 	log[LDEBUG] << "debug: cyan";
 	log[LINFO] << "info: green";
@@ -51,10 +51,9 @@ int main() {
 	log[LWARN] << "warning: yellow";
 	log[LERROR] << "error: red";
 
-	cout<<"you can also create sublog by a sublog"<<endl;
-	Logs subsublog(sublog,"anothersub: ");
+	cout << "you can also create sublog by a sublog" << endl;
+	Logs subsublog(sublog, "anothersub: ");
 	subsublog[LINFO] << "info";
-
 
 	return 0;
 }
