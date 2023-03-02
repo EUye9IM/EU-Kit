@@ -37,7 +37,7 @@ clean:
 	@$(RM) $(OUTS)
 	@echo remove *.o
 	@$(RM) *.o
-	
+	@$(RM) test.log
 
 test:
 	echo $(OBJS)

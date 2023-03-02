@@ -6,7 +6,7 @@ using namespace EUkit::logs;
 
 int main() {
 	cout << "to file" << endl;
-	Logs log("text.log");
+	Logs log("test.log");
 	log[LINFO] << "balabalabala...";
 
 	cout << "to screen" << endl;
