@@ -5,20 +5,23 @@
 using namespace std;
 using namespace EUkit::logs;
 
-namespace EUkit::logs::_internal {
-_Buf::_Buf(Logs *plogs, Level level)
-	: plogs(plogs), level(level), is_moved(false) {}
+namespace EUkit {
+namespace logs {
+namespace _internal {
+_Buf::_Buf(Logs *plogs, Level level, bool can_ignore)
+	: plogs(plogs), level(level), can_ignore(can_ignore), is_moved(false) {}
 _Buf::_Buf(_Buf &&b)
-	: plogs(b.plogs), level(b.level), buf(move(b.buf)), is_moved(false) {
+	: plogs(b.plogs), level(b.level), buf(std::move(b.buf)),
+	  can_ignore(b.can_ignore), is_moved(false) {
 	b.is_moved = true;
 }
 _Buf::~_Buf() {
-	if (is_moved)
+	if (is_moved || can_ignore)
 		return;
 	this->plogs->write(this->level, this->buf.str());
 }
 
-} // namespace EUkit::logs::_internal
+} // namespace _internal
 
 Logs::Logs()
 	: prefix(), log(nullptr), out(&cout), outf(), theme(def_theme<>),
@@ -70,7 +73,7 @@ Logs &Logs::open(Logs &log) {
 }
 
 _internal::_Buf Logs::operator[](Level level) {
-	return move(_internal::_Buf(this, level));
+	return _internal::_Buf(this, level, this->level > level);
 }
 void Logs::close() {
 	log = nullptr;
@@ -82,8 +85,8 @@ void Logs::close() {
 }
 
 void Logs::write(Level level, const std::string &msg) {
-	if (this->level > level)
-		return;
+	// if (this->level > level)
+	//	return;
 	lock_guard<mutex> locker(write_lock);
 	if (log) {
 		log[0][level] << prefix + msg;
@@ -92,3 +95,5 @@ void Logs::write(Level level, const std::string &msg) {
 		out->flush();
 	}
 }
+} // namespace logs
+} // namespace EUkit

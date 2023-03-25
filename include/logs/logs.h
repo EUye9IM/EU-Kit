@@ -16,11 +16,12 @@ enum Level { LTRACE, LDEBUG, LINFO, LWARN, LERROR };
 namespace _internal {
 class _Buf {
 public:
-	_Buf(Logs *plogs, Level level);
+	_Buf(Logs *plogs, Level level, bool can_ignore);
 	_Buf(_Buf &&b);
 	~_Buf();
 	template <typename T> _Buf &operator<<(const T value) {
-		buf << value;
+		if (!can_ignore)
+			buf << value;
 		return *this;
 	}
 
@@ -28,6 +29,7 @@ private:
 	Logs *plogs;
 	Level level;
 	std::stringstream buf;
+	bool can_ignore;
 	bool is_moved;
 };
 
