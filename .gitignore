@@ -5,3 +5,5 @@
 *.dll
 *.a
 *.log
+/compile_commands.json
+
