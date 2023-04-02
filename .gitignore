@@ -6,4 +6,6 @@
 *.a
 *.log
 /compile_commands.json
-
+/.cache
+/.xmake
+/.clangd

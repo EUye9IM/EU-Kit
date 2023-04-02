@@ -14,9 +14,21 @@ namespace logs {
 class Logs;
 enum Level { LTRACE, LDEBUG, LINFO, LWARN, LERROR };
 namespace _internal {
+class _Buf;
+class _SubLogs;
+class _LogWriter {
+	friend class _Buf;
+	friend class _SubLogs;
+
+public:
+	virtual _Buf operator[](Level level) = 0;
+
+private:
+	virtual void write(Level level, const std::string &msg) = 0;
+};
 class _Buf {
 public:
-	_Buf(Logs *plogs, Level level, bool can_ignore);
+	_Buf(_LogWriter *plogs, Level level, bool can_ignore);
 	_Buf(_Buf &&b);
 	~_Buf();
 	template <typename T> _Buf &operator<<(const T value) {
@@ -26,13 +38,28 @@ public:
 	}
 
 private:
-	Logs *plogs;
+	_LogWriter *plogs;
 	Level level;
 	std::stringstream buf;
 	bool can_ignore;
 	bool is_moved;
 };
 
+class _SubLogs : public _LogWriter {
+	friend class ::EUkit::logs::Logs;
+
+public:
+	_SubLogs(_LogWriter *log, const std::string &prefix);
+	~_SubLogs();
+	virtual _Buf operator[](Level level);
+	_SubLogs makeSub(const std::string &prefix);
+
+private:
+	std::string prefix;
+	_LogWriter *log;
+	_SubLogs &setPrefix(const std::string &prefix);
+	virtual void write(Level level, const std::string &msg);
+};
 } // namespace _internal
 using LogTheme = std::function<std::string(const std::string &, Level)>;
 const static int VT100 = 1;
@@ -117,34 +144,38 @@ std::string def_theme(const std::string &msg, Level level) {
 	return log_buf.str();
 }
 
-class Logs {
-	friend class _internal::_Buf;
+class Logs : public _internal::_LogWriter {
+	friend class _internal::_SubLogs;
 
 public:
 	Logs();
 	Logs(std::ostream &out);
 	Logs(const std::string &filename);
-	Logs(Logs &log, const std::string &prefix = std::string());
+	// Logs(Logs &log, const std::string &prefix = std::string());
 	~Logs();
 	Logs &setTheme(const LogTheme);
 	Logs &setLevel(Level level);
 	Logs &setPrefix(const std::string &prefix);
+
+	_internal::_SubLogs makeSub(const std::string &prefix);
+
 	Logs &open(std::ostream &out);
 	Logs &open(const std::string &filename);
-	Logs &open(Logs &log);
-	_internal::_Buf operator[](Level level);
+	/* Logs &open(Logs &log); */
+	virtual _internal::_Buf operator[](Level level);
 
 private:
 	void close();
-	void write(Level level, const std::string &msg);
+	virtual void write(Level level, const std::string &msg);
 	std::string prefix;
-	Logs *log;
+	// Logs *log;
 	std::ostream *out;
 	std::ofstream outf;
 	LogTheme theme;
 	Level level;
 	std::mutex write_lock;
 };
+
 } // namespace logs
 } // namespace EUkit
 

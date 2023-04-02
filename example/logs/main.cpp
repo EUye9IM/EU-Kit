@@ -37,7 +37,7 @@ int main() {
 	log.setPrefix("");
 	log[LINFO] << "info";
 
-	Logs sublog(log, "submodule: ");
+	auto sublog = log.makeSub("submodule: ");
 	sublog[LINFO] << "info";
 
 	cout << "change level to LTRACE" << endl;
@@ -48,11 +48,12 @@ int main() {
 	log[LDEBUG] << "debug: cyan";
 	log[LINFO] << "info: green";
 	sublog[LINFO] << "sub log also turn to green";
+	sublog[LTRACE] << "sub log trace";
 	log[LWARN] << "warning: yellow";
 	log[LERROR] << "error: red";
 
 	cout << "you can also create sublog by a sublog" << endl;
-	Logs subsublog(sublog, "anothersub: ");
+	auto subsublog = sublog.makeSub("anothersub: ");
 	subsublog[LINFO] << "info";
 
 	return 0;
